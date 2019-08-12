@@ -22,10 +22,10 @@ export const TitleBar = withRouter(({ history }) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" className={classes.title}>
+                <Typography variant="h6" className={classes.title} data-testid="titleText">
                     SCB
                 </Typography>
-                <Button color="inherit" onClick={buttonClick}>Login</Button>
+                <Button color="inherit" onClick={buttonClick} data-testid="loginButton">Login</Button>
             </Toolbar>
         </AppBar>
     );
