@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { App } from './App';
+import { TitleBar } from './TitleBar';
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
         (
             <Router>
-                <App />
+                <TitleBar />
             </Router>
         ),
         div
     );
     ReactDOM.unmountComponentAtNode(div);
+});
+
+it('takes you to login page when click login', () => {
+
 });
