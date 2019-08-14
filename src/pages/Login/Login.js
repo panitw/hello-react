@@ -7,6 +7,7 @@ export const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
@@ -25,6 +26,10 @@ export const Login = () => {
             }
             window.localStorage.setItem('userInfo', JSON.stringify(user));
             setCurrentUser(user);
+        } else {
+            setUsername('');
+            setPassword('');
+            setErrorMessage('Invalid username/password');
         }
     }
 
@@ -32,6 +37,7 @@ export const Login = () => {
         return (
             <div style={{padding: '20px'}}>
                 <h1>Login</h1>
+                {errorMessage ? <div style={{color: 'red'}}>{errorMessage}</div> : null}
                 <TextField
                     label="Username"
                     value={username}
