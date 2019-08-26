@@ -1,43 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../../redux/actions/userAction';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 
-export const Login = () => {
+const LoginComponent = (props) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null);
-
-    useEffect(() => {
-        let userData = window.localStorage.getItem('userInfo');
-        if (userData) {
-            setCurrentUser(JSON.parse(userData));
-        }
-    }, [currentUser])
 
     const onLogin = () => {
-        if (username === 'admin' && password === 'admin') {
-            const user = {
-                id: 0,
-                username: username,
-                name: 'Administrator'
-            }
-            window.localStorage.setItem('userInfo', JSON.stringify(user));
-            setCurrentUser(user);
-        } else {
-            setUsername('');
-            setPassword('');
-            setErrorMessage('Invalid username/password');
-        }
+        props.login(username, password);
     }
 
-    if (!currentUser) {
+    if (!props.currentUser) {
         return (
             <div style={{padding: '20px'}}>
                 <h1>Login</h1>
-                {errorMessage ? <div style={{color: 'red'}}>{errorMessage}</div> : null}
+                {props.errorMessage ? <div style={{color: 'red'}}>{props.errorMessage}</div> : null}
                 <TextField
                     label="Username"
                     value={username}
@@ -62,3 +43,13 @@ export const Login = () => {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    let user = state.user || {};
+    return {
+        currentUser: user.currentUser,
+        errorMessage: user.loginError
+    }
+}
+
+export const Login = connect(mapStateToProps, { login })(LoginComponent);

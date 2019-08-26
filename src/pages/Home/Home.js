@@ -1,11 +1,13 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../redux/actions/userAction';
 
-export const Home = withRouter(({history}) => {
+const HomeComponent = withRouter(({history, ...props}) => {
 
     const onLogout = () => {
-        window.localStorage.removeItem('userInfo');
+        props.logout();
         history.push('/login');
     }
 
@@ -17,3 +19,5 @@ export const Home = withRouter(({history}) => {
         </div>
     );
 });
+
+export const Home = connect(null, {logout})(HomeComponent);
